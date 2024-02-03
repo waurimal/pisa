@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.475">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>(가제) ILSA(International Large-Scale Assessments) 분석의 길잡이 using R: PISA 편 - 4&nbsp; 제3장 학업 성취도 평가 방법</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./references1.html" rel="next">
+<link href="./chap02.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">제3장 학업 성취도 평가 방법</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">(가제) ILSA(International Large-Scale Assessments) 분석의 길잡이 using R: PISA 편</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+    <a href="" title="Download" id="sidebar-tool-dropdown-0" class="sidebar-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-download"></i></a>
+    <ul class="dropdown-menu" aria-labelledby="sidebar-tool-dropdown-0">
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="./-가제--ILSA-International-Large-Scale-Assessments--분석의-길잡이-using-R--PISA-편.pdf">
+            <i class="bi bi-bi-file-pdf pe-1"></i>
+          Download PDF
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="./-가제--ILSA-International-Large-Scale-Assessments--분석의-길잡이-using-R--PISA-편.epub">
+            <i class="bi bi-bi-journal pe-1"></i>
+          Download ePub
+          </a>
+        </li>
+    </ul>
+    <a href="" title="Share" id="sidebar-tool-dropdown-1" class="sidebar-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-share"></i></a>
+    <ul class="dropdown-menu" aria-labelledby="sidebar-tool-dropdown-1">
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+            <i class="bi bi-bi-twitter pe-1"></i>
+          Twitter
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+            <i class="bi bi-bi-facebook pe-1"></i>
+          Facebook
+          </a>
+        </li>
+    </ul>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">index.html</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./preface.html" class="sidebar-item-text sidebar-link">머리말</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part1.html" class="sidebar-item-text sidebar-link">제1부 PISA 개요</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap01.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">제1장 PISA</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap02.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">제2장 PISA</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap03.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">제3장 학업 성취도 평가 방법</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references1.html" class="sidebar-item-text sidebar-link">References1</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part2.html" class="sidebar-item-text sidebar-link">제2부 PISA 실전</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap04.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">제4장 PISA</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap05.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">제5장 PISA</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references2.html" class="sidebar-item-text sidebar-link">References2</a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#표집-설계" id="toc-표집-설계" class="nav-link active" data-scroll-target="#표집-설계"><span class="toc-section-number">4.1</span>  표집 설계</a>
+  <ul class="collapse">
+  <li><a href="#표집-가중치" id="toc-표집-가중치" class="nav-link" data-scroll-target="#표집-가중치"><span class="toc-section-number">4.1.1</span>  표집 가중치</a></li>
+  </ul></li>
+  <li><a href="#매트릭스-샘플링" id="toc-매트릭스-샘플링" class="nav-link" data-scroll-target="#매트릭스-샘플링"><span class="toc-section-number">4.2</span>  매트릭스 샘플링</a>
+  <ul class="collapse">
+  <li><a href="#문항-풀-구성" id="toc-문항-풀-구성" class="nav-link" data-scroll-target="#문항-풀-구성"><span class="toc-section-number">4.2.1</span>  문항 풀 구성</a></li>
+  <li><a href="#시험-구성" id="toc-시험-구성" class="nav-link" data-scroll-target="#시험-구성"><span class="toc-section-number">4.2.2</span>  시험 구성</a></li>
+  <li><a href="#학생에게-시험-배정" id="toc-학생에게-시험-배정" class="nav-link" data-scroll-target="#학생에게-시험-배정"><span class="toc-section-number">4.2.3</span>  학생에게 시험 배정</a></li>
+  <li><a href="#데이터-분석" id="toc-데이터-분석" class="nav-link" data-scroll-target="#데이터-분석"><span class="toc-section-number">4.2.4</span>  데이터 분석</a></li>
+  <li><a href="#매트릭스-샘플링의-장단점" id="toc-매트릭스-샘플링의-장단점" class="nav-link" data-scroll-target="#매트릭스-샘플링의-장단점"><span class="toc-section-number">4.2.5</span>  매트릭스 샘플링의 장단점</a></li>
+  </ul></li>
+  <li><a href="#유의측정값plausible-values" id="toc-유의측정값plausible-values" class="nav-link" data-scroll-target="#유의측정값plausible-values"><span class="toc-section-number">4.3</span>  유의측정값(Plausible Values)</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/edit/main/chap03.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">제3장 학업 성취도 평가 방법</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="표집-설계" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="표집-설계"><span class="header-section-number">4.1</span> 표집 설계</h2>
+<p>PISA 2022의 표집 설계는 각 국가/경제에서 교육기관에 재학 중인 15세 학생들을 대상으로 합니다. 이는 다음과 같은 학생들을 포함합니다.</p>
+<ul>
+<li><p>교육기관에 전일제로 재학 중인 15세 학생들</p></li>
+<li><p>교육기관에 파트타임으로 재학 중인 15세 학생들</p></li>
+<li><p>직업 훈련 프로그램이나 그 외 관련 교육 프로그램에 참여하는 학생들</p></li>
+<li><p>국내의 외국 학교에 재학 중인 학생들</p></li>
+</ul>
+<p>PISA 2022의 평가는 2022년 3월 1일부터 10월 31일 사이의 56일 동안 진행되어야 하며, 학년 시작 후 처음 6주 동안은 평가가 허용되지 않습니다. 이는 학년 초에 학생들의 성적 수준이 이전 학년 말보다 낮을 수 있기 때문입니다.</p>
+<p>PISA 2022는 다단계 층화 무작위 추출 방법을 사용하여 샘플을 선정합니다. 과정을 좀더 살펴보면, 첫째, 국가별 샘플 크기를 결정합니다. 각 국가의 참여 학교 수는 학생 인구 비례에 따라 결정됩니다. 예를 들어, 한국은 2022년 PISA에 약 6,000명의 학생이 참여했습니다. 이는 한국 전체 15세 학생 인구의 약 0.6%에 해당합니다.</p>
+<p>두 번째, 학교 표집입니다. 각 국가/경제는 15세 학생들이 재학 중인 학교를 층화 무선 추출 방법을 사용하여 선정합니다. 학교는 지역, 학교 유형, 학생 사회경제적 배경 등을 고려하여 층화됩니다. 예를 들어, 한국은 지역, 학교 유형, 학교 규모를 고려하여 학교를 층화했습니다. 이렇게 선택된 학교는 PISA 평가에 참여하게 됩니다.</p>
+<p>세 번째, 학생 표집입니다. 이 단계에서는 선택된 학교의 15세 학생들을 표집합니다. 학생의 성별, 학년 등을 고려하여 학생을 선택합니다. 이렇게 선택된 학생들은 PISA 평가에 참여하게 됩니다. 모든 학생이 평가에 참여할 수 있도록 노력하지만, 일부 학생은 부모의 동의를 얻지 못하거나 평가에 참여하지 않을 수 있습니다.</p>
+<section id="표집-가중치" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="표집-가중치"><span class="header-section-number">4.1.1</span> 표집 가중치</h3>
+<p>PISA 데이터를 분석하기 위해서는 표집 가중치가 필요합니다. 표집 가중치는 각 참가 학생이 PISA 전체 모집단에서 적절하게 대표되도록 보장하기 위해 분석에 포함되어야 합니다. 표집 가중치는 각 참가 단위가 전체 모집단 추정치에 대한 비례적 기여를 제어하는 데 사용됩니다. PISA 표집 설계에서는 표집 가중치를 사용하여 각 학생이 전체 모집단을 적절하게 대표하도록 합니다. 표집 가중치는 학교 표집 설계와 학생 표집 설계에서 발생할 수 있는 편향을 보정하는 데 사용됩니다. 즉 표집 가중치는 샘플링 과정에서 발생하는 편향을 보정하기 위해 각 학생의 표집 확률을 역으로 반영하여, 평가 결과가 전체 학생 모집단을 대표할 수 있도록 합니다.</p>
+<p>표집 가중치가 모든 학생에게 동일하지 않은 몇 가지 이유가 있습니다. 첫째, 학교 표집 설계는 학교 모집단의 특정 부문을 과대 표집하거나 과소 표집할 수 있습니다. 둘째, 표집 시점의 학교 크기에 대한 정보가 완전히 정확하지 않을 수 있습니다. 셋째, 학교의 비응답이 발생할 수 있으며, 이 경우 가중치 조정 없이는 해당 종류의 학교의 학생들이 과소 표현될 수 있습니다.</p>
+</section>
+</section>
+<section id="매트릭스-샘플링" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="매트릭스-샘플링"><span class="header-section-number">4.2</span> 매트릭스 샘플링</h2>
+<p>PISA는 학생들의 학업 성취도를 평가하기 위해 시험 시간을 줄이고 효율성을 높인 매트릭스 샘플링이라는 방법을 사용합니다. 매트릭스 샘플링은 모든 학생에게 모든 문항을 출제해 시행하지 않고, 서로 다른 문항 조합을 제시하여 데이터를 수집하는 방법입니다. 이는 다음과 같은 과정을 통해 이루어집니다.</p>
+<section id="문항-풀-구성" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="문항-풀-구성"><span class="header-section-number">4.2.1</span> 문항 풀 구성</h3>
+<p>PISA에서는 다양한 난이도와 영역을 포함하는 문항 풀을 구성합니다. 문항 풀은 다음과 같은 기준으로 구성됩니다.</p>
+<ul>
+<li><p>난이도: 쉬운 문항부터 어려운 문항까지 다양한 난이도의 문항을 포함합니다.</p></li>
+<li><p>영역: PISA는 읽기, 수학, 과학 등에서 다양한 영역을 평가합니다. 각 영역은 여러 하위 영역으로 구성됩니다.</p></li>
+<li><p>문항 유형: 선다형, 서답형 등 다양한 유형의 문항을 포함합니다.</p></li>
+</ul>
+</section>
+<section id="시험-구성" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="시험-구성"><span class="header-section-number">4.2.2</span> 시험 구성</h3>
+<p>문항 풀에서 여러 개의 시험 버전을 구성합니다. 각 시험 버전은 다음과 같은 특징을 가집니다.</p>
+<ul>
+<li><p>균형: 각 시험 버전은 난이도, 영역, 문항 유형 등에서 균형을 이루도록 구성됩니다.</p></li>
+<li><p>독립성: 각 시험 버전은 서로 독립적이어야 합니다. 즉, 한 시험 버전의 답변이 다른 시험 버전의 답변에 영향을 미치지 않아야 합니다.</p></li>
+</ul>
+</section>
+<section id="학생에게-시험-배정" class="level3" data-number="4.2.3">
+<h3 data-number="4.2.3" class="anchored" data-anchor-id="학생에게-시험-배정"><span class="header-section-number">4.2.3</span> 학생에게 시험 배정</h3>
+<p>각 학생은 무작위로 하나의 시험 버전을 배정받습니다. 학생은 배정받은 시험 버전의 모든 문항을 풀어야 합니다.</p>
+</section>
+<section id="데이터-분석" class="level3" data-number="4.2.4">
+<h3 data-number="4.2.4" class="anchored" data-anchor-id="데이터-분석"><span class="header-section-number">4.2.4</span> 데이터 분석</h3>
+<p>매트릭스 샘플링으로 수집된 데이터는 IRT(Item Response Theory) 모델을 사용하여 분석됩니다. IRT 모델은 각 학생의 능력과 각 문항의 난이도를 추정하는 데 사용됩니다.</p>
+</section>
+<section id="매트릭스-샘플링의-장단점" class="level3" data-number="4.2.5">
+<h3 data-number="4.2.5" class="anchored" data-anchor-id="매트릭스-샘플링의-장단점"><span class="header-section-number">4.2.5</span> 매트릭스 샘플링의 장단점</h3>
+<ul>
+<li><p>시험 시간 단축: 매트릭스 샘플링은 모든 학생에게 모든 문항을 출제하지 않기 때문에 시험 시간을 단축할 수 있습니다.</p></li>
+<li><p>효율성 향상: 시험 시간 단축은 시험 시행 비용을 절감하고, 채점 및 분석 과정을 효율적으로 만들 수 있습니다.</p></li>
+<li><p>정확도 향상: IRT 모델을 사용하여 분석함으로써, 학생의 능력을 더 정확하게 추정할 수 있습니다.</p></li>
+<li><p><strong>오차 발생 가능성</strong>: 매트릭스 샘플링은 모든 학생에게 모든 문항을 출제하지 않기 때문에, 추정 오차가 발생할 가능성이 있습니다.</p></li>
+</ul>
+</section>
+</section>
+<section id="유의측정값plausible-values" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="유의측정값plausible-values"><span class="header-section-number">4.3</span> 유의측정값(Plausible Values)</h2>
+<p>PISA 2022에서 유의측정값(이하 PVs)을 사용하는 이유 중 하나는 <strong>매트릭스 샘플링</strong> 때문입니다.</p>
+<p>이러한 매트릭스 샘플링 방식은 학생별 평가 결과에 오차를 발생시킬 수 있습니다. PVs는 이러한 오차를 줄이기 위해 사용됩니다. 각 학생의 답변 데이터를 기반으로, 가능한 모든 문항 조합에 대한 점수를 추정하여 여러 개의 PVs를 생성합니다. 이렇게 생성된 PVs는 학생의 실제 능력을 더 정확하게 반영할 수 있습니다.</p>
+<p><strong>PV를 사용하는 또 다른 이유는 다음과 같습니다.</strong></p>
+<ul>
+<li><p><strong>능력 분포 추정</strong>: PVs는 단순히 평균 점수만 제공하는 것이 아니라, 학생들의 능력 분포를 추정할 수 있도록 합니다. 이를 통해 특정 능력 수준에 있는 학생들의 비율을 파악하거나, 능력 집단 간 격차를 분석하는 데 활용할 수 있습니다.</p></li>
+<li><p><strong>측정 오차 보정</strong>: PVs는 시험 자체의 오차뿐만 아니라, 답안 채점 오차, 응답 오차 등 다양한 오차를 보정하는 데 도움이 됩니다.</p></li>
+<li><p><strong>다양한 분석 가능</strong>: PVs는 평균 점수 비교, 능력 분포 비교, 확률적 분석 등 다양한 분석 방법에 활용될 수 있습니다.</p></li>
+</ul>
+<p>따라서 PISA 2022에서 PVs는 매트릭스 샘플링으로 인한 오차를 줄이고, 학생의 능력을 더 정확하게 평가하며, 다양한 분석을 가능하게 하는 중요한 역할을 합니다.</p>
+<p>사실 PVs는 대규모 평가 프로그램에서 사용되는 중요한 개념입니다. 이는 PISA뿐만 아니라 NAEP, TIMSS와 같은 프로그램에서도 학생들의 성취도 데이터 세트에 포함되어 있습니다. PVs는 각 학생의 관찰할 수 없는 잠재적 성취도에 대한 다중 대체값입니다. 이 값들은 학생들의 능력 범위를 대표한다고 해석되는데, 이 정보는 학생이나 학교의 성과 측정에 통합되어야 합니다.</p>
+<p>PVs를 처리하는 올바른 절차는 다음과 같습니다.</p>
+<ol type="1">
+<li><p>분석하고자 하는 통계 모델에 각 PVs를 사용하여 PVs 값이 제공된 수만큼 모수를 추정합니다. 이렇게 제공된 수만큼의 모수 추정치(β_PVs)와 해당 표본오차 (σ_PVs)의 추정치를 얻습니다.</p></li>
+<li><p>그 추정치들의 평균을 계산합니다.</p></li>
+<li><p>대체 오차의 크기를 추정합니다.</p></li>
+<li><p>평균 표본 오차와 대체 오차를 결합하여 최종 표준 오차의 값을 계산합니다.</p></li>
+</ol>
+<p>이러한 접근 방식은 학생 능력의 전체 분포를 고려할 수 있게 해주며, 이는 학생이나 학교의 성과 측정에 중요한 역할을 합니다.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./chap02.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">제2장 PISA</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./references1.html" class="pagination-link">
+        <span class="nav-page-text">References1</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
